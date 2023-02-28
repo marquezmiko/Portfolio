@@ -4,7 +4,8 @@ export default function Document() {
   const meta = {
     title: 'Justo Marquez - Software Engineer',
     description: 'Welcome to my portfolio!',
-    image: 'https://assets.vercel.com/image/upload/q_auto/front/vercel/dps.png',
+    //image: 'https://assets.vercel.com/image/upload/q_auto/front/vercel/dps.png',
+    image: '~/public/images/Epic.JPG'
   }
 
   return (
