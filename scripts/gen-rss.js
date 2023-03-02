@@ -10,20 +10,20 @@ async function generate() {
     feed_url: 'http://www.justomarquez.dev',
   })
 
-  const blogs = await fs.readdir(path.join(__dirname, '..', 'pages', 'blog'))
+  const posts = await fs.readdir(path.join(__dirname, '..', 'pages', 'posts'))
 
   await Promise.all(
-    blogs.map(async (name) => {
+    posts.map(async (name) => {
       if (name.startsWith('index.')) return
 
       const content = await fs.readFile(
-        path.join(__dirname, '..', 'pages', 'blog', name)
+        path.join(__dirname, '..', 'pages', 'posts', name)
       )
       const frontmatter = matter(content)
 
       feed.item({
         title: frontmatter.data.title,
-        url: '/blog/' + name.replace(/\.mdx?/, ''),
+        url: '/posts/' + name.replace(/\.mdx?/, ''),
         date: frontmatter.data.date,
         description: frontmatter.data.description,
         categories: frontmatter.data.tag.split(', '),
