@@ -1,0 +1,72 @@
+---
+title: Using React Icons
+date: 2023/3/2
+description: Learning to import React-icons into .mdx, and successfully deploying
+tag: web development
+author: Justo Marquez
+---
+
+import Image from 'next/image'
+
+# Importing
+A common place for devs familiar with React to get icons is <a href="https://react-icons.github.io/react-icons"> react-icons </a>.
+Here one can find a massive library of free-to-use icons commonly imported as simply as
+```
+import { FaBeer } from 'react-icons/fa';
+class Question extends React.Component {
+  render() {
+    return <h3> Lets go for a <FaBeer />? </h3>
+  }
+}
+```
+
+However I hit two snags trying this with the "Projects" page of this website:
+1. Icons kept adding a newline before and after the text I wanted it to be inline with.
+2. Deployment kept failing the simple `npm install react-icons --save` I was able to do on my local machine.
+
+## Importing
+### Problem:
+Doing a simple `## FindYourSpace <GoTelescope />` would sadly do my H2-level 'FindYourSpace' title, then put the telescope below, then leave an awkward gap to the sub-header H3-level text.
+<Image
+  src="/images/icons-beforeCSS.png"
+  alt="Bad CSS Spacing"
+  width={825}
+  height={450}
+  priority
+  className="next-image"
+/>
+### Investigation:
+using chrome dev tools I noticed that the svg icon was a sibling element to the H2 element. I then saw that the inherited css had `display: block` set. Setting this to `display: inline` resulted in the desired behavior.
+### Solution:
+Add a custom class `## FindYourSpace <GoTelescope className="react-icon" />` I could then add CSS to in main.css. Using `display: inline`. And voila!
+<Image
+  src="/images/icons-afterCSS.png"
+  alt="Good CSS Spacing"
+  width={825}
+  height={450}
+  priority
+  className="next-image"
+/>
+## Deployment
+### Problem:
+Vercel usually nicely auto-deploys anything pushed to main. From the logs I can tell it runs a quick install and build check of dependencies as a first stage of the deployment. Unfortunately I kept failing with errors like below
+<Image
+  src="/images/icons-fail.png"
+  alt="Failed Deployment"
+  width={1125}
+  height={750}
+  priority
+  className="next-image"
+/>
+### Investigation:
+Thinking initially that perhaps this was just vercel not running `npm install` correctly, I found in the settings page of the deployment that I could override and insert a command to run pre-deployment. I attempted `npm install` and `npm install react-icons --save` but to no solution. Slow down, dissect the problem. 
+### Solution:
+The error specifically mentions that it cannot **resolve** the import. I looked in the node-modules directory and noticed our issue, the actual modules were lower case like `react-icons/go`. Well there's our issue. Swapping out the uppercases with lower case resolved this.
+<Image
+  src="/images/icons-deploy.png"
+  alt="Successful Deployment"
+  width={1125}
+  height={750}
+  priority
+  className="next-image"
+/>
