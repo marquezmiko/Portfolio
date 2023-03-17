@@ -1,0 +1,106 @@
+---
+title: Sticky Headers
+date: 2023/3/17
+description: The CSS Sticky Header property
+tag: web development
+author: Justo Marquez
+---
+
+import Image from 'next/image'
+import { BsEyeglasses } from 'react-icons/Bs'
+
+# Sticky Headers
+
+I was looking for ways to improve the front-end of this site and stumbled upon sticky headers while using a phone app. In fact, you've likely been using them ever since you signed up for a Facebook account back in the 2000s...
+
+
+```
+css selector{
+    position: sticky;
+    top: 0;
+}
+```
+
+## First Try
+A few things to take into account before trying this out:
+- The pages of this site are not .js, .jsx, or .tsx. They are markdown .mdx sheets which allow for HTML tags. My initial thought was this may or may not cause unexpected behavior compared to online examples
+- I currently only have one .css file for this site, which meets the need for it's small size. Best to develop in a way that lets me reproduce the desired final behavior throughout the site.
+
+Based on the example in the header I thought this should be easy enough at first. In chrome dev tools I tried simply adding the above css code to the specific div I cared about.
+
+**Issue:** the sticky div isn't stickying
+
+**Research:** let's actually look into what our css is _trying_ to do.
+
+The `position: sticky` line toggles behavior, but what is that behavior? We're basically trying to get some element (a div in this case) to toggle between relatie and fixed positioning. This helps us understand that `top: 0` causes the fixed position at the top when the element reaches a specific location, in our code, 0.
+
+
+**Thought:** What am I trying to have the sticky header stick to the top of? Sure in this case it's the top of the site but in reality it is the parent element I really need to care about. With my first try, this was the `<Article>` element that makes up the whole projects page. Looking at CSS in chrome dev tools applied to this element, one key standout: `display: flex`.
+
+## Improvement
+A quick google search yielded multiple forums and blog posts with others saying to check that if your element is flex'd, make sure items are aligned to flex-start.
+
+## Final Product
+Ultimately I ended up wrapping each individual project of my Projects page in a series of nested divs with specific classes. This will help me make more modularized css changes in the future based on if content is in the header title, the body, or elsewhere in the full project "container". One example below, note that this is from a .mdx file utilizing both markup and inline HTML:
+```
+<div className="project-container">
+  <div className="project-header">
+    <h2>FindYourSpace</h2>
+    <GoTelescope className="react-icon" />
+  </div>
+  <h3 className="project-title">AirBnB but for parking spaces</h3>
+  <div className="project-content">
+    - Created a renter history module that allowed a user to see past, current, and future space reservations on a single dashboard. Built on React, NextJS, and Postgres.
+    - History dashboard dynamically interacted with LeafletJS, an open-source JS library of mobile-friendly interactive maps
+    - Implemented Block and Favorite User functionality used across the engineering team for their respective modules
+    - Utilized PG-Node as an ORM to interact with a Postgres relational database
+
+
+    <Image
+      src="/images/FYS-Home.png"
+      alt="FindYourSpace Home"
+      width={1125}
+      height={750}
+      priority
+      className="next-image"
+    />
+    [GitHub ↗ ](https://github.com/boc-bulbasaur/FindYourSpace)
+  </div>
+</div>
+```
+
+CSS was pretty simple, I added some conditionals based on light vs dark mode as a `background` setting was required so the text of my headers didn't just overlay on top of other text while a user scrolled. Also some other lines just to clean the visuals up:
+```
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  
+  font-size: 2.5vw;
+  font-weight: 600;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  text-align: left;
+  height: calc(10vw + 20px);
+  transition: all 0.2s ease-in;
+}
+
+@media (prefers-color-scheme: light) {
+  .project-header {
+    background: white!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .project-header {
+    background: #101112!important;
+  }
+}
+
+.project-title {
+  margin-top: 0.6em;
+}
+```
+
+Front-end is surprisingly tricky, but I felt good about how I approached and learned this one. At least with front-end work, you can literally see the fruits of your labor. <BsEyeglasses />
