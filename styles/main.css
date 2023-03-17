@@ -24,7 +24,7 @@ body {
   font-variation-settings: 'wght' 450;
   font-variant: common-ligatures contextual;
   letter-spacing: -0.02em;
-  background-color: #101112;
+  /* background-color: #101112; */
 }
 b,
 strong,
@@ -89,7 +89,7 @@ img.next-image {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: #101112!important;
+  
   font-size: 2.5vw;
   font-weight: 600;
   padding: 10px 0;
@@ -98,6 +98,18 @@ img.next-image {
   text-align: left;
   height: calc(10vw + 20px);
   transition: all 0.2s ease-in;
+}
+
+@media (prefers-color-scheme: light) {
+  .project-header {
+    background: white!important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .project-header {
+    background: #101112!important;
+  }
 }
 
 .project-title {
