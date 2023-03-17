@@ -24,6 +24,7 @@ body {
   font-variation-settings: 'wght' 450;
   font-variant: common-ligatures contextual;
   letter-spacing: -0.02em;
+  background-color: #101112;
 }
 b,
 strong,
@@ -38,6 +39,20 @@ h1 {
 }
 h2 {
   font-variation-settings: 'wght' 750;
+}
+a {
+  text-decoration: underline;
+}
+li {
+  list-style-type: circle;
+}
+.fade-in-image {
+  animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @media screen and (min-device-pixel-ratio: 1.5),
@@ -54,6 +69,8 @@ details summary {
 
 img.next-image {
   margin: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .prose a {
@@ -64,6 +81,37 @@ img.next-image {
   color: #69778c;
 }
 
-.react-icon {
-  display: inline;
+.socials {
+  font-size: 110%;
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #101112!important;
+  font-size: 2.5vw;
+  font-weight: 600;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  text-align: left;
+  height: calc(10vw + 20px);
+  transition: all 0.2s ease-in;
+}
+
+.project-title {
+  margin-top: 0.6em;
+}
+
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + . .project-content{
+  padding-top: 102px;
 }
