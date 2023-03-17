@@ -128,6 +128,6 @@ img.next-image {
   padding-top: 102px;
 }
 
-/* .next-image-Ollie {
-  margin-right: 20px;
-} */
+.home {
+  animation: fadeIn 5s;
+}
