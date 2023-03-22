@@ -5,6 +5,7 @@ date: 2023-03-17
 ---
 
 import Image from 'next/image'
+import { ImGithub, ImLinkedin, ImInstagram, ImMail } from 'react-icons/im';
 
 <div className="home">
 
@@ -63,13 +64,22 @@ You can access my resume <a href="https://docs.google.com/document/d/1BUhp3YZtve
 ---
 
 <div className="socials">
-  GitHub [@marquezmiko](https://github.com/marquezmiko)
-  <br />
-  LinkedIn [@justo-marquez](https://www.linkedin.com/in/justo-marquez/)
-  <br />
-  Instagram [@miko.photo](https://instagram.com/miko.photo)
-  <br />
-  Email marquezmiko@gmail.com
+  <div className="social-element">
+    <ImGithub />
+    [@marquezmiko](https://github.com/marquezmiko)
+  </div>
+  <div className="social-element">
+    <ImLinkedin />
+    [@justo-marquez](https://www.linkedin.com/in/justo-marquez/)
+  </div>
+  <div className="social-element">
+    <ImInstagram />
+    [@miko.photo](https://instagram.com/miko.photo)
+  </div>
+  <div className="social-element">
+    <ImMail />
+    marquezmiko@gmail.com
+  </div>
 </div>
 
 ---
